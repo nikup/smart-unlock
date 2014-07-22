@@ -4,74 +4,74 @@ SmartUnlock.Events = function () {
         dragging = false,
         currentScreen = "home",
         screens = {
-        	"home": {
-        		"image": "",
-        		"buttons": [
-        		{
-        			"screen": "off",
-        			"x": 0,
-        			"y": 0,
-        			"width": 0,
-        			"heigth": 0,
-        		}, {
-        			"screen": "mainMenu",
-        			"x": 0,
-        			"y": 0,
-        			"width": 0,
-        			"heigth": 0,
-        		}]
-        	},
-        	"off": {
-        		"image": "",
-        		"buttons": [
-        		{
-        			"screen": "lock",
-        			"x": 0,
-        			"y": 0,
-        			"width": 0,
-        			"heigth": 0,
-        		}]
-        	},
-        	"mainMenu": {
-        		"state": "diasable",
-        		"image": "",
-        		"buttons": [
-        		{
-        			"state": "diasable",
-        			"screen": "mainMenu",
-        			"x": 0,
-        			"y": 0,
-        			"width": 0,
-        			"heigth": 0
-        		}, {
-        			"state": "enableSlider",
-        			"screen": "mainMenu",
-        			"x": 0,
-        			"y": 0,
-        			"width": 0,
-        			"heigth": 0
-        		}, {
-        			"state": "enablePattern",
-        			"screen": "mainMenu",
-        			"x": 0,
-        			"y": 0,
-        			"width": 0,
-        			"heigth": 0
-        		}, {
-        			"screen": "configureSlider",
-        			"x": 0,
-        			"y": 0,
-        			"width": 0,
-        			"heigth": 0
-        		}, {
-        			"screen": "configurePatterns",
-        			"x": 0,
-        			"y": 0,
-        			"width": 0,
-        			"heigth": 0
-        		}]
-        	}
-        	};  
+            "home": {
+                "image": "",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "heigth": 0,
+                }, {
+                    "screen": "mainMenu",
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "heigth": 0,
+                }]
+            },
+            "off": {
+                "image": "",
+                "buttons": [
+                {
+                    "screen": "lock",
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "heigth": 0,
+                }]
+            },
+            "mainMenu": {
+                "state": "diasable",
+                "image": "",
+                "buttons": [
+                {
+                    "state": "diasable",
+                    "screen": "mainMenu",
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "heigth": 0
+                }, {
+                    "state": "enableSlider",
+                    "screen": "mainMenu",
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "heigth": 0
+                }, {
+                    "state": "enablePattern",
+                    "screen": "mainMenu",
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "heigth": 0
+                }, {
+                    "screen": "configureSlider",
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "heigth": 0
+                }, {
+                    "screen": "configurePatterns",
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "heigth": 0
+                }]
+            }
+        };  
 };
 
 SmartUnlock.Events.prototype = function () {
