@@ -1,18 +1,22 @@
 var SmartUnlock = SmartUnlock || {};
 SmartUnlock.Events = function () {
+};
+
+SmartUnlock.Events.prototype = function () {
     var dragData = null,
         dragging = false,
         currentScreen = "home",
         screens = {
             "home": {
-                "image": "",
+                "image": "images/asdfghj.png",
                 "buttons": [
                 {
                     "screen": "off",
-                    "x": 0,
-                    "y": 0,
-                    "width": 0,
-                    "heigth": 0,
+                    "image": "images/off.png",
+                    "x": 650,
+                    "y": 50,
+                    "width": 50,
+                    "heigth": 50,
                 }, {
                     "screen": "mainMenu",
                     "x": 0,
@@ -71,12 +75,9 @@ SmartUnlock.Events = function () {
                     "heigth": 0
                 }]
             }
-        };  
-};
-
-SmartUnlock.Events.prototype = function () {
+        }; 
         var startDrag = function (ev) {
-            ev = ev || event;
+            ev = ev || eventHandler;
             this.dragging = true;
             this.dragData = {
                 x: ev.clientX,
@@ -100,14 +101,30 @@ SmartUnlock.Events.prototype = function () {
             //},
         stopLineDrag = function (ev) {
             if (this.dragData) {
-                ev = ev || event;
+                ev = ev || eventHandler;
                 //brush.drawLine(context, this.dragData.x, this.dragData.y, ev.clientX, ev.clientY);
+                drawScreen();
             }
+        },
+
+        drawScreen = function () {
+            var img = new Image;
+            img.src = screens[currentScreen]["image"];
+            context.drawImage(img, 0, 0, 800, 739);
+            for (var i = 0; i < screens[currentScreen].buttons.length; i++) {
+                var button = screens[currentScreen].buttons[i];
+                if (button.image) {
+                    var buttonImage = new Image;
+                    buttonImage.src = button.image;
+                    context.drawImage(buttonImage, button.x, button.y, button.width, button.heigth);
+                };
+            };
         };
 
     return {
         startDrag: startDrag,
        // drag: drag,
-        stopLineDrag: stopLineDrag
+        stopLineDrag: stopLineDrag,
+        drawScreen: drawScreen
     };
 }();

@@ -5,10 +5,11 @@ var context;
 window.onload = function () {
 
     canvas = document.getElementById('smartUnlockCanvas');
+    context = canvas.getContext('2d');
 
-    context = canvas.getContext('2d')
-    var event = new SmartUnlock.Events();
-     canvas.addEventListener("mousedown", event.startDrag);
+    var eventHandler = new SmartUnlock.Events();
+    eventHandler.drawScreen();
+    canvas.addEventListener("mousedown", eventHandler.startDrag);
     //canvas.addEventListener ("mousemove", drag);
-    canvas.addEventListener("mouseup", event.stopLineDrag);
+    canvas.addEventListener("mouseup", eventHandler.stopLineDrag);
 }
