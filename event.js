@@ -6,24 +6,24 @@ SmartUnlock.Events.prototype = function () {
     var dragData = null,
         dragging = false,
         currentScreen = "home",
+        state = "disabled",
+        lockPattern = false,
         screens = {
             "home": {
-                "image": "images/asdfghj.png",
+                "image": "images/home.png",
                 "buttons": [
                 {
                     "screen": "off",
-                    "image": "images/off.png",
-                    "x": 650,
-                    "y": 50,
+                    "x": 550,
+                    "y": 0,
                     "width": 50,
                     "heigth": 50
                 }, {
                     "screen": "mainMenu",
-                    "image": "images/10562044_868045486558778_153414427_o.jpg",
-                    "x": 475,
-                    "y": 360,
-                    "width": 50,
-                    "heigth": 50
+                    "x": 350,
+                    "y": 250,
+                    "width": 70,
+                    "heigth": 70
                 }]
             },
             "off": {
@@ -31,57 +31,193 @@ SmartUnlock.Events.prototype = function () {
                 "buttons": [
                 {
                     "screen": "lock",
-                    "image": "images/off.png",
-                    "x": 650,
-                    "y": 50,
+                    "x": 550,
+                    "y": 0,
                     "width": 50,
                     "heigth": 50
                 }]
             },
             "mainMenu": {
-                "state": "diasable",
-                "image": "images/addnewpatterns.png",
+                "template": "images/addnewpatterns-",
+                "image": "images/addnewpatterns-disabled.png",
                 "buttons": [
                 {
                     "screen": "off",
-                    "image": "images/off.png",
-                    "x": 650,
-                    "y": 50,
+                    "x": 550,
+                    "y": 0,
                     "width": 50,
                     "heigth": 50
                 }, {
-                    "state": "diasable",
+                    "state": "disabled",
                     "screen": "mainMenu",
-                    "x": 0,
-                    "y": 0,
-                    "width": 0,
-                    "heigth": 0
+                    "x": 160,
+                    "y": 180,
+                    "width": 250,
+                    "heigth": 30
                 }, {
-                    "state": "enableSlider",
+                    "state": "sliders",
                     "screen": "mainMenu",
-                    "x": 0,
-                    "y": 0,
-                    "width": 0,
-                    "heigth": 0
+                    "x": 160,
+                    "y": 110,
+                    "width": 250,
+                    "heigth": 30
                 }, {
-                    "state": "enablePattern",
+                    "state": "patterns",
                     "screen": "mainMenu",
-                    "x": 0,
-                    "y": 0,
-                    "width": 0,
-                    "heigth": 0
+                    "altScreen": "setLockPattern",
+                    "x": 160,
+                    "y": 145,
+                    "width": 250,
+                    "heigth": 30
                 }, {
                     "screen": "configureSlider",
-                    "x": 0,
-                    "y": 0,
-                    "width": 0,
-                    "heigth": 0
+                    "x": 160,
+                    "y": 250,
+                    "width": 250,
+                    "heigth": 30
                 }, {
                     "screen": "configurePatterns",
-                    "x": 0,
+                    "x": 160,
                     "y": 0,
-                    "width": 0,
-                    "heigth": 0
+                    "width": 250,
+                    "heigth": 30
+                }]
+            },
+            "setLockPattern": {
+                "image": "images/unlockpattern.png",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
+                    "width": 50,
+                    "heigth": 50
+                }, {
+                    "screen": "mainMenu",
+                    "x": 160,
+                    "y": 180,
+                    "width": 250,
+                    "heigth": 30
+                }]
+            },
+            "configureSlider": {
+                "image": "images/configureSlider.png",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
+                    "width": 50,
+                    "heigth": 50
+                }, {
+                    "screen": "chooseFunc",
+                    "x": 340,
+                    "y": 376,
+                    "width": 50,
+                    "heigth": 50
+                }]
+            },
+            "chooseFunc": {
+                "image": "images/choosefrom.png",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
+                    "width": 50,
+                    "heigth": 50
+                }, {
+                    "screen": "chooseContact",
+                    "x": 180,
+                    "y": 130,
+                    "width": 200,
+                    "heigth": 40
+                }, {
+                    "screen": "chooseSMS",
+                    "x": 180,
+                    "y": 170,
+                    "width": 200,
+                    "heigth": 40
+                }, {
+                    "screen": "chooseApp",
+                    "x": 180,
+                    "y": 220,
+                    "width": 200,
+                    "heigth": 40
+                }, {
+                    "screen": "chooseFile",
+                    "x": 180,
+                    "y": 260,
+                    "width": 200,
+                    "heigth": 40
+                }]
+            },
+            "chooseContact": {
+                "image": "images/mama.png",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
+                    "width": 50,
+                    "heigth": 50
+                }, {
+                    "screen": "chooseFunc",
+                    "x": 340,
+                    "y": 376,
+                    "width": 50,
+                    "heigth": 50
+                }]
+            },
+            "chooseSMS": {
+                "image": "images/mamapalachinki.png",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
+                    "width": 50,
+                    "heigth": 50
+                }, {
+                    "screen": "chooseFunc",
+                    "x": 340,
+                    "y": 376,
+                    "width": 50,
+                    "heigth": 50
+                }]
+            },
+            "chooseApp": {
+                "image": "images/appss.png",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
+                    "width": 50,
+                    "heigth": 50
+                }, {
+                    "screen": "chooseFunc",
+                    "x": 340,
+                    "y": 376,
+                    "width": 50,
+                    "heigth": 50
+                }]
+            },
+            "chooseFile": {
+                "image": "images/pdfche.png",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
+                    "width": 50,
+                    "heigth": 50
+                }, {
+                    "screen": "chooseFunc",
+                    "x": 340,
+                    "y": 376,
+                    "width": 50,
+                    "heigth": 50
                 }]
             }
         }; 
@@ -123,7 +259,7 @@ SmartUnlock.Events.prototype = function () {
             if (screens[currentScreen]["image"]) {
                 img.src = screens[currentScreen]["image"];
                 img.onload = function(){
-                    context.drawImage(img, 0, 0, 800, 739);
+                    context.drawImage(img, 0, 0, 600, 554);
                 };
             };
             for (var i = 0; i < screens[currentScreen].buttons.length; i++) {
@@ -145,6 +281,15 @@ SmartUnlock.Events.prototype = function () {
                 var button = screens[currentScreen].buttons[i];
                 if (button.x < x && button.x + button.width > x && button.y < y && button.y + button.heigth > y) {
                     currentScreen = button.screen;
+                    if (button.state) {
+                        state = button.state;
+                    };
+                    if (currentScreen == "mainMenu") {
+                        screens.mainMenu.image = screens.mainMenu.template + state + ".png";
+                        if (button.altScreen && !lockPattern) {
+                            currentScreen = button.altScreen;
+                        }
+                    };
                     console.log(currentScreen);
                     break;                    
                 };
