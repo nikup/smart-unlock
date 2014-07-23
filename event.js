@@ -78,7 +78,7 @@ SmartUnlock.Events.prototype = function () {
                 }, {
                     "screen": "configurePatterns",
                     "x": 160,
-                    "y": 0,
+                    "y": 285,
                     "width": 250,
                     "heigth": 30
                 }]
@@ -94,10 +94,10 @@ SmartUnlock.Events.prototype = function () {
                     "heigth": 50
                 }, {
                     "screen": "mainMenu",
-                    "x": 160,
-                    "y": 180,
-                    "width": 250,
-                    "heigth": 30
+                    "x": 340,
+                    "y": 150,
+                    "width": 50,
+                    "heigth": 50
                 }]
             },
             "configureSlider": {
@@ -113,6 +113,40 @@ SmartUnlock.Events.prototype = function () {
                     "screen": "chooseFunc",
                     "x": 340,
                     "y": 376,
+                    "width": 50,
+                    "heigth": 50
+                }]
+            },
+            "configurePatterns": {
+                "image": "images/confPatterns.jpg",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
+                    "width": 50,
+                    "heigth": 50
+                }, {
+                    "screen": "choosePattern",
+                    "x": 170,
+                    "y": 120,
+                    "width": 225,
+                    "heigth": 50
+                }]
+            },
+            "choosePattern": {
+                "image": "images/somepattern.png",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
+                    "width": 50,
+                    "heigth": 50
+                }, {
+                    "screen": "chooseFunc",
+                    "x": 340,
+                    "y": 150,
                     "width": 50,
                     "heigth": 50
                 }]
@@ -219,6 +253,40 @@ SmartUnlock.Events.prototype = function () {
                     "width": 50,
                     "heigth": 50
                 }]
+            },
+            "sliderLock": {
+                "image": "images/oneslider2-1.png",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
+                    "width": 50,
+                    "heigth": 50
+                }, {
+                    "screen": "chooseFunc",
+                    "x": 340,
+                    "y": 376,
+                    "width": 50,
+                    "heigth": 50
+                }]
+            },
+            "patternLock": {
+                "image": "images/patternsscreen.png",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
+                    "width": 50,
+                    "heigth": 50
+                }, {
+                    "screen": "chooseFunc",
+                    "x": 340,
+                    "y": 376,
+                    "width": 50,
+                    "heigth": 50
+                }]
             }
         }; 
         var startDrag = function (ev) {
@@ -289,6 +357,15 @@ SmartUnlock.Events.prototype = function () {
                         if (button.altScreen && !lockPattern) {
                             currentScreen = button.altScreen;
                         }
+                    };
+                    if (currentScreen == "lock") {
+                        if (state == "sliders") {
+                            currentScreen = "sliderLock";
+                        } else if (state == "patterns") {
+                            currentScreen = "patternLock";
+                        } else {
+                            currentScreen = "home"
+                        };
                     };
                     console.log(currentScreen);
                     break;                    
