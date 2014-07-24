@@ -8,6 +8,9 @@ SmartUnlock.Events.prototype = function () {
         currentScreen = "home",
         state = "disabled",
         lockPattern = false,
+        theLockPattern = [],
+        anotherPattern = [],
+        lockAction = "default",
         slideAction = "default",
         dots = [
         {
@@ -349,12 +352,6 @@ SmartUnlock.Events.prototype = function () {
                     "y": 0,
                     "width": 50,
                     "heigth": 50
-                }, {
-                    "screen": "chooseFunc",
-                    "x": 340,
-                    "y": 376,
-                    "width": 50,
-                    "heigth": 50
                 }]
             }
         }; 
@@ -362,10 +359,10 @@ SmartUnlock.Events.prototype = function () {
             ev = ev || eventHandler;
             this.dragging = true;
             var coords = canvas.relMouseCoords(ev);
-            this.dragData = {
+            this.dragData = [{
                 x: coords.x,
                 y: coords.y
-            };
+            }];
         },
         drag = function (ev) {
             if (this.dragData && this.dragging) {
@@ -378,20 +375,71 @@ SmartUnlock.Events.prototype = function () {
                 context.lineWidth = 20;
                 context.strokeStyle = 'rgba(255, 247, 127, 0.2)';
                 context.stroke();
-                this.dragData = {
+                this.dragData.push({
                     x: coords.x,
                     y: coords.y
-                };
+                });
             }
         },
         stopLineDrag = function (ev) {
             if (this.dragData) {
                 ev = ev || eventHandler;
                 //brush.drawLine(context, this.dragData.x, this.dragData.y, ev.clientX, ev.clientY);
+                if (currentScreen == "setLockPattern") {
+                    for (var i = 0; i < this.dragData.length; i++) {
+                        for (var j = 0; j < dots.length; j++) {
+                            if(this.dragData[i].x > dots[j].x - 10 && this.dragData[i].x < dots[j].x + 10 &&
+                                this.dragData[i].y > dots[j].y - 10 && this.dragData[i].y < dots[j].y + 10) {
+                                theLockPattern.push(dots[j].n);
+                            }
+                        };
+                    };
+                    theLockPattern = theLockPattern.filter(function(elem, pos) {
+                        return theLockPattern.indexOf(elem) == pos;
+                    });
+                };
+
+                if (currentScreen == "choosePattern") {
+                    for (var i = 0; i < this.dragData.length; i++) {
+                        for (var j = 0; j < dots.length; j++) {
+                            if(this.dragData[i].x > dots[j].x - 5 && this.dragData[i].x < dots[j].x + 5 &&
+                                this.dragData[i].y > dots[j].y - 5 && this.dragData[i].y < dots[j].y + 5) {
+                                anotherPattern.push(dots[j].n);
+                            }
+                        };  
+                    };
+                    anotherPattern = anotherPattern.filter(function(elem, pos) {
+                        return anotherPattern.indexOf(elem) == pos;
+                    });
+                };
+
+                if (currentScreen == "patternLock") {
+                    var currentPattern = [];
+                    for (var i = 0; i < this.dragData.length; i++) {
+                        for (var j = 0; j < dots.length; j++) {
+                            if(this.dragData[i].x > dots[j].x - 5 && this.dragData[i].x < dots[j].x + 5 &&
+                                this.dragData[i].y > dots[j].y - 5 && this.dragData[i].y < dots[j].y + 5) {
+                                currentPattern.push(dots[j].n);
+                            }
+                        };  
+                    };
+                    currentPattern = currentPattern.filter(function(elem, pos) {
+                        return currentPattern.indexOf(elem) == pos;
+                    });
+
+                    if (arraysIdentical(currentPattern, theLockPattern)) {
+                        currentScreen = "home";
+                    };
+                    if (arraysIdentical(currentPattern, anotherPattern)) {
+                        currentScreen = "action";
+                    };
+                };
+
                 var coords = canvas.relMouseCoords(ev);
                 pressButton(coords.x, coords.y);
                 drawScreen();
                 this.dragging = false;
+                this.dragData = null;
             }
         },
 
@@ -432,7 +480,15 @@ SmartUnlock.Events.prototype = function () {
                         }
                     };
                     if (button.action) {
-                        slideAction = button.action;
+                        console.log(button.action);
+                        if (state == "sliders") {
+                            slideAction = button.action;
+                        }
+                        if (state == "patterns") {
+                            lockAction = button.action;
+                            console.log(lockAction);
+                        }
+                        
                     };
                     
                     if (currentScreen == "lock") {
@@ -449,13 +505,28 @@ SmartUnlock.Events.prototype = function () {
                         screens.sliderLock.image = screens.sliderLock.template + slideAction + ".png";
                     };
 
-                    if (currentScreen == "action") {
-                        screens.action.image = screens.action.template + slideAction + ".png";
-                    };
+                    
                     console.log(currentScreen);
                     break;                    
                 };
             };
+
+            if (currentScreen == "action") {
+                if (state == "sliders") {
+                    screens.action.image = screens.action.template + slideAction + ".png";
+                };
+                if (state == "patterns") {
+                    screens.action.image = screens.action.template + lockAction + ".png";
+                };
+            };
+        },
+        arraysIdentical = function (a, b) {
+            var i = a.length;
+            if (i != b.length) return false;
+            while (i--) {
+                if (a[i] !== b[i]) return false;
+            }
+            return true;
         };
 
     return {
