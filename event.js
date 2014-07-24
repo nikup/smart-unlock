@@ -397,6 +397,7 @@ SmartUnlock.Events.prototype = function () {
                     theLockPattern = theLockPattern.filter(function(elem, pos) {
                         return theLockPattern.indexOf(elem) == pos;
                     });
+                    console.log(theLockPattern);
                 };
 
                 if (currentScreen == "choosePattern") {
@@ -411,6 +412,7 @@ SmartUnlock.Events.prototype = function () {
                     anotherPattern = anotherPattern.filter(function(elem, pos) {
                         return anotherPattern.indexOf(elem) == pos;
                     });
+                    console.log(anotherPattern);
                 };
 
                 if (currentScreen == "patternLock") {
@@ -426,13 +428,16 @@ SmartUnlock.Events.prototype = function () {
                     currentPattern = currentPattern.filter(function(elem, pos) {
                         return currentPattern.indexOf(elem) == pos;
                     });
-
-                    if (arraysIdentical(currentPattern, theLockPattern)) {
-                        currentScreen = "home";
-                    };
-                    if (arraysIdentical(currentPattern, anotherPattern)) {
-                        currentScreen = "action";
-                    };
+                    console.log(currentPattern);
+                    if (!arraysIdentical(currentPattern, [])) {
+                        if (arraysIdentical(currentPattern, theLockPattern)) {
+                            currentScreen = "home";
+                        } else if (arraysIdentical(currentPattern, anotherPattern)) {
+                            currentScreen = "action";
+                        } else {
+                            currentPattern = [];
+                        }
+                    }
                 };
 
                 var coords = canvas.relMouseCoords(ev);
