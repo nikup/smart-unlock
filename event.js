@@ -9,6 +9,44 @@ SmartUnlock.Events.prototype = function () {
         state = "disabled",
         lockPattern = false,
         slideAction = "default",
+        dots = [
+        {
+            "x": 210,
+            "y": 225,
+            "n": 1
+        }, {
+            "x": 290,
+            "y": 225,
+            "n": 2
+        }, {
+            "x": 365,
+            "y": 225,
+            "n": 3
+        }, {
+            "x": 210,
+            "y": 310,
+            "n": 4
+        }, {
+            "x": 290,
+            "y": 310,
+            "n": 5
+        }, {
+            "x": 365,
+            "y": 310,
+            "n": 6
+        }, {
+            "x": 210,
+            "y": 395,
+            "n": 7
+        }, {
+            "x": 290,
+            "y": 395,
+            "n": 8
+        }, {
+            "x": 365,
+            "y": 395,
+            "n": 9
+        }],
         screens = {
             "home": {
                 "image": "images/home.png",
@@ -323,26 +361,29 @@ SmartUnlock.Events.prototype = function () {
         var startDrag = function (ev) {
             ev = ev || eventHandler;
             this.dragging = true;
+            var coords = canvas.relMouseCoords(ev);
             this.dragData = {
-                x: ev.clientX,
-                y: ev.clientY
+                x: coords.x,
+                y: coords.y
             };
         },
-            //drag = function (ev, context) {
-            //    if (this.dragData && this.dragging) {
-            //        ev = ev || event;
-            //        context.beginPath();
-            //        context.moveTo(dragData.x, dragData.y);
-            //        context.lineTo(ev.clientX, ev.clientY);
-            //        context.lineWidth = 5;
-            //        context.strokeStyle = 'blue';
-            //        context.stroke();
-            //        dragData = {
-            //            x: ev.clientX,
-            //            y: ev.clientY
-            //        };
-            //    }
-            //},
+        drag = function (ev) {
+            if (this.dragData && this.dragging) {
+                ev = ev || event;
+                var coords = canvas.relMouseCoords(ev);
+                context.beginPath();
+                context.moveTo(this.dragData.x, this.dragData.y);
+                context.arc(coords.x, coords.y, 10, 0 ,2*Math.PI);
+                //context.lineTo(coords.x, coords.y);
+                context.lineWidth = 20;
+                context.strokeStyle = 'rgba(255, 247, 127, 0.2)';
+                context.stroke();
+                this.dragData = {
+                    x: coords.x,
+                    y: coords.y
+                };
+            }
+        },
         stopLineDrag = function (ev) {
             if (this.dragData) {
                 ev = ev || eventHandler;
@@ -350,6 +391,7 @@ SmartUnlock.Events.prototype = function () {
                 var coords = canvas.relMouseCoords(ev);
                 pressButton(coords.x, coords.y);
                 drawScreen();
+                this.dragging = false;
             }
         },
 
@@ -418,7 +460,7 @@ SmartUnlock.Events.prototype = function () {
 
     return {
         startDrag: startDrag,
-       // drag: drag,
+        drag: drag,
         stopLineDrag: stopLineDrag,
         drawScreen: drawScreen
     };

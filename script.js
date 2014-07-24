@@ -10,7 +10,7 @@ window.onload = function () {
     var eventHandler = new SmartUnlock.Events();
     eventHandler.drawScreen();
     canvas.addEventListener("mousedown", eventHandler.startDrag);
-    //canvas.addEventListener ("mousemove", drag);
+    canvas.addEventListener ("mousemove", eventHandler.drag);
     canvas.addEventListener("mouseup", eventHandler.stopLineDrag);
 
     function relMouseCoords(event){
