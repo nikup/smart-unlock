@@ -8,6 +8,7 @@ SmartUnlock.Events.prototype = function () {
         currentScreen = "home",
         state = "disabled",
         lockPattern = false,
+        slideAction = "default",
         screens = {
             "home": {
                 "image": "images/home.png",
@@ -196,10 +197,11 @@ SmartUnlock.Events.prototype = function () {
                     "width": 50,
                     "heigth": 50
                 }, {
-                    "screen": "chooseFunc",
-                    "x": 340,
-                    "y": 376,
-                    "width": 50,
+                    "screen": "home",
+                    "action": "call",
+                    "x": 170,
+                    "y": 140,
+                    "width": 250,
                     "heigth": 50
                 }]
             },
@@ -213,11 +215,12 @@ SmartUnlock.Events.prototype = function () {
                     "width": 50,
                     "heigth": 50
                 }, {
-                    "screen": "chooseFunc",
-                    "x": 340,
+                    "screen": "home",
+                    "action": "sms",
+                    "x": 200,
                     "y": 376,
-                    "width": 50,
-                    "heigth": 50
+                    "width": 250,
+                    "heigth": 150
                 }]
             },
             "chooseApp": {
@@ -230,11 +233,19 @@ SmartUnlock.Events.prototype = function () {
                     "width": 50,
                     "heigth": 50
                 }, {
-                    "screen": "chooseFunc",
-                    "x": 340,
-                    "y": 376,
-                    "width": 50,
-                    "heigth": 50
+                    "screen": "home",
+                    "action": "facebook",
+                    "x": 185,
+                    "y": 185,
+                    "width": 66,
+                    "heigth": 66
+                }, {
+                    "screen": "home",
+                    "action": "twitter",
+                    "x": 185,
+                    "y": 265,
+                    "width": 66,
+                    "heigth": 66
                 }]
             },
             "chooseFile": {
@@ -247,15 +258,17 @@ SmartUnlock.Events.prototype = function () {
                     "width": 50,
                     "heigth": 50
                 }, {
-                    "screen": "chooseFunc",
-                    "x": 340,
-                    "y": 376,
-                    "width": 50,
-                    "heigth": 50
+                    "screen": "home",
+                    "action": "pdf",
+                    "x": 190,
+                    "y": 170,
+                    "width": 70,
+                    "heigth": 70
                 }]
             },
             "sliderLock": {
-                "image": "images/oneslider2-1.png",
+                "template": "images/sliderscreen-",
+                "image": "images/sliderscreen-default.png",
                 "buttons": [
                 {
                     "screen": "off",
@@ -264,9 +277,27 @@ SmartUnlock.Events.prototype = function () {
                     "width": 50,
                     "heigth": 50
                 }, {
-                    "screen": "chooseFunc",
-                    "x": 340,
+                    "screen": "home",
+                    "x": 285,
                     "y": 376,
+                    "width": 110,
+                    "heigth": 40
+                }, {
+                    "screen": "action",
+                    "x": 175,
+                    "y": 376,
+                    "width": 110,
+                    "heigth": 40
+                }]
+            },
+            "action": {
+                "template": "images/action-",
+                "image": "images/action-default.png",
+                "buttons": [
+                {
+                    "screen": "off",
+                    "x": 550,
+                    "y": 0,
                     "width": 50,
                     "heigth": 50
                 }]
@@ -358,6 +389,10 @@ SmartUnlock.Events.prototype = function () {
                             currentScreen = button.altScreen;
                         }
                     };
+                    if (button.action) {
+                        slideAction = button.action;
+                    };
+                    
                     if (currentScreen == "lock") {
                         if (state == "sliders") {
                             currentScreen = "sliderLock";
@@ -366,6 +401,14 @@ SmartUnlock.Events.prototype = function () {
                         } else {
                             currentScreen = "home"
                         };
+                    };
+
+                    if (currentScreen == "sliderLock") {
+                        screens.sliderLock.image = screens.sliderLock.template + slideAction + ".png";
+                    };
+
+                    if (currentScreen == "action") {
+                        screens.action.image = screens.action.template + slideAction + ".png";
                     };
                     console.log(currentScreen);
                     break;                    
